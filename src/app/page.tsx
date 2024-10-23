@@ -12,10 +12,11 @@ async function fetchProducts() {
 
   const products = await (response.json() as Promise<ProductResponse[]>);
 
-  return products.map((product) => ({
+  return products.map((product, _) => ({
     ...product,
     price: +product.price.slice(1) || 0,
     value: +product.value.slice(1) || 0,
+    slug: crypto.randomUUID(),
   })) as Product[];
 }
 
