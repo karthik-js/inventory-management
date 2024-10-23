@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import StoreProvider from "./StoreProvider";
+import Header from "./Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,7 +15,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased dark`}>{children}</body>
+      <body className={`antialiased dark`}>
+        <StoreProvider>
+          <Header />
+          <main className="p-5">{children}</main>
+        </StoreProvider>
+      </body>
     </html>
   );
 }

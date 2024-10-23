@@ -7,6 +7,7 @@ export interface ProductResponse {
 }
 
 export interface Product {
+  slug: string;
   name: string;
   category: string;
   value: number;
