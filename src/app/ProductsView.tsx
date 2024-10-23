@@ -6,6 +6,7 @@ import type { Product } from "@/types/product";
 import { useEffect } from "react";
 import ProductDataTable from "./ProductDataTable";
 import { productColumns } from "./ProductColumns";
+import InventoryOverview from "./InventoryOverview";
 
 export default function ProductsView({ products }: { products: Product[] }) {
   const dispatch = useAppDispatch();
@@ -14,5 +15,10 @@ export default function ProductsView({ products }: { products: Product[] }) {
     dispatch(addProducts(products));
   }, [dispatch, products]);
 
-  return <ProductDataTable columns={productColumns} />;
+  return (
+    <>
+      <InventoryOverview />
+      <ProductDataTable columns={productColumns} />
+    </>
+  );
 }
