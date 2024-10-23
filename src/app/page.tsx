@@ -1,7 +1,6 @@
 import { PRODUCTS_URL } from "@/constants/general";
 import type { Product, ProductResponse } from "@/types/product";
-import ProductDataTable from "./ProductDataTable";
-import { productColumns } from "./ProductColumns";
+import ProductsView from "./ProductsView";
 
 async function fetchProducts() {
   const response = await fetch(PRODUCTS_URL, { cache: "force-cache" });
@@ -20,8 +19,8 @@ async function fetchProducts() {
   })) as Product[];
 }
 
-export default async function Home() {
+export default async function InventoryDashboard() {
   const products = await fetchProducts();
 
-  return <ProductDataTable columns={productColumns} data={products} />;
+  return <ProductsView products={products} />;
 }

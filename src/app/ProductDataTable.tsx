@@ -8,6 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useAppSelector } from "@/lib/hooks";
+import type { Product } from "@/types/product";
 import {
   flexRender,
   getCoreRowModel,
@@ -15,15 +17,15 @@ import {
   type ColumnDef,
 } from "@tanstack/react-table";
 
-interface ProductDataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+interface ProductDataTableProps<TValue> {
+  columns: ColumnDef<Product, TValue>[];
 }
 
-export default function ProductDataTable<TData, TValue>({
+export default function ProductDataTable<TValue>({
   columns,
-  data,
-}: ProductDataTableProps<TData, TValue>) {
+}: ProductDataTableProps<TValue>) {
+  const data = useAppSelector((state) => state.products.products);
+
   const table = useReactTable({
     data,
     columns,
