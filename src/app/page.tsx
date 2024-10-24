@@ -15,7 +15,7 @@ const fetchProducts = unstable_cache(
 
     const products = await(response.json() as Promise<ProductResponse[]>);
 
-    return products.map((product, _) => ({
+    return products.map((product) => ({
       ...product,
       price: +product.price.slice(1) || 0,
       value: +product.value.slice(1) || 0,
