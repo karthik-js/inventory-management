@@ -7,6 +7,7 @@ import {
   disableProduct,
   enableProduct,
   removeProduct,
+  setProductToEdit,
 } from "@/lib/stores/features/products/productsSlice";
 import type { Product } from "@/types/product";
 import type {
@@ -19,7 +20,7 @@ import { useTransition } from "react";
 
 function ColumnHeader({ header }: HeaderContext<Product, unknown>) {
   return (
-    <Badge variant="default" className="bg-green-100">
+    <Badge variant="default" className="bg-green-100 capitalize">
       {header.id}
     </Badge>
   );
@@ -37,11 +38,10 @@ function RenderActions({ row }: CellContext<Product, unknown>) {
 
     if (target.closest("button") !== null) {
       const actionType = target.closest("button")!.dataset.action;
-      const productName = product.name;
 
       switch (actionType) {
         case "edit":
-          alert(`Edit: ${productName}`);
+          dispatch(setProductToEdit(product));
           break;
         case "enable":
           startTransition(() => {

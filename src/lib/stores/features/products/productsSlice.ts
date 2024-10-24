@@ -5,6 +5,7 @@ const productsSlice = createSlice({
   name: "products",
   initialState: {
     products: [] as Product[],
+    productToEdit: null as Product | null,
   },
   reducers: {
     addProducts: (state, action: PayloadAction<Product[]>) => {
@@ -39,6 +40,9 @@ const productsSlice = createSlice({
         (product) => product.slug !== action.payload
       );
     },
+    setProductToEdit: (state, action: PayloadAction<Product | null>) => {
+      state.productToEdit = action.payload;
+    },
   },
 });
 
@@ -48,5 +52,7 @@ export const {
   removeProduct,
   disableProduct,
   enableProduct,
+  setProductToEdit,
 } = productsSlice.actions;
+
 export default productsSlice.reducer;

@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import ProductDataTable from "./ProductDataTable";
 import { productColumns } from "./ProductColumns";
 import InventoryOverview from "./InventoryOverview";
+import UpdateProductDialog from "./UpdateProductDialog";
 
 export default function ProductsView({ products }: { products: Product[] }) {
   const dispatch = useAppDispatch();
@@ -19,6 +20,7 @@ export default function ProductsView({ products }: { products: Product[] }) {
     <>
       <InventoryOverview />
       <ProductDataTable columns={productColumns} />
+      <UpdateProductDialog />
     </>
   );
 }
