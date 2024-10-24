@@ -3,13 +3,18 @@
 import { Switch } from "@/components/ui/switch";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setIsAdmin } from "@/lib/stores/features/settings/settingsSlice";
+import { useTransition } from "react";
 
 export default function Header() {
   const isAdmin = useAppSelector((state) => state.settings.isAdmin);
   const dispatch = useAppDispatch();
 
+  const [, startTransition] = useTransition();
+
   const onSwitch = (checked: boolean) => {
-    dispatch(setIsAdmin(!checked));
+    startTransition(() => {
+      dispatch(setIsAdmin(!checked));
+    });
   };
 
   return (

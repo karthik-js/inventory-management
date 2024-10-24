@@ -4,12 +4,14 @@ import { useAppSelector } from "@/lib/hooks";
 export default function InventoryOverview() {
   const products = useAppSelector((state) => state.products.products);
 
-  const totalProducts = products.length;
+  let totalProducts = 0;
   let totalStoreValue = 0;
   let outOfStocks = 0;
   const categories = new Set<string>();
 
   products.forEach((product) => {
+    if (product.isDisabled) return;
+    totalProducts++;
     totalStoreValue += product.price * product.quantity;
     if (product.quantity === 0) {
       outOfStocks++;

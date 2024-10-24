@@ -18,6 +18,22 @@ const productsSlice = createSlice({
         return product;
       });
     },
+    disableProduct: (state, action: PayloadAction<string>) => {
+      state.products = state.products.map((product) => {
+        if (product.slug === action.payload) {
+          return { ...product, isDisabled: true };
+        }
+        return product;
+      });
+    },
+    enableProduct: (state, action: PayloadAction<string>) => {
+      state.products = state.products.map((product) => {
+        if (product.slug === action.payload) {
+          return { ...product, isDisabled: false };
+        }
+        return product;
+      });
+    },
     removeProduct: (state, action: PayloadAction<string>) => {
       state.products = state.products.filter(
         (product) => product.slug !== action.payload
@@ -26,6 +42,11 @@ const productsSlice = createSlice({
   },
 });
 
-export const { addProducts, updateProduct, removeProduct } =
-  productsSlice.actions;
+export const {
+  addProducts,
+  updateProduct,
+  removeProduct,
+  disableProduct,
+  enableProduct,
+} = productsSlice.actions;
 export default productsSlice.reducer;

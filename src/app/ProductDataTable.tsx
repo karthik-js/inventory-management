@@ -9,7 +9,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useAppSelector } from "@/lib/hooks";
+import type { RootState } from "@/lib/stores/store";
+import { cn } from "@/lib/utils";
 import type { Product } from "@/types/product";
+import { createSelector } from "@reduxjs/toolkit";
 import {
   flexRender,
   getCoreRowModel,
@@ -21,10 +24,21 @@ interface ProductDataTableProps<TValue> {
   columns: ColumnDef<Product, TValue>[];
 }
 
+const selectedProducts = createSelector(
+  [
+    (state: RootState) => state.products.products,
+    (state: RootState) => state.settings.isAdmin,
+  ],
+  (products, isAdmin) => {
+    if (isAdmin) return products;
+    return products.filter((product) => !product.isDisabled);
+  }
+);
+
 export default function ProductDataTable<TValue>({
   columns,
 }: ProductDataTableProps<TValue>) {
-  const data = useAppSelector((state) => state.products.products);
+  const data = useAppSelector(selectedProducts);
 
   const table = useReactTable({
     data,
@@ -60,8 +74,11 @@ export default function ProductDataTable<TValue>({
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && "selected"}
+                key={row.original.slug}
+                className={cn({
+                  "bg-gray-500 hover:bg-gray-500": row.original.isDisabled,
+                })}
+                aria-disabled={row.original.isDisabled}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>

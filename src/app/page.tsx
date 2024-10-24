@@ -20,6 +20,7 @@ const fetchProducts = unstable_cache(
       price: +product.price.slice(1) || 0,
       value: +product.value.slice(1) || 0,
       slug: crypto.randomUUID(),
+      isDisabled: false,
     })) as Product[];
   },
   ["products"],

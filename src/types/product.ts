@@ -13,4 +13,5 @@ export interface Product {
   value: number;
   quantity: number;
   price: number;
+  isDisabled: boolean;
 }

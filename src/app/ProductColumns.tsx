@@ -3,14 +3,19 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { removeProduct } from "@/lib/stores/features/products/productsSlice";
+import {
+  disableProduct,
+  enableProduct,
+  removeProduct,
+} from "@/lib/stores/features/products/productsSlice";
 import type { Product } from "@/types/product";
 import type {
   CellContext,
   ColumnDef,
   HeaderContext,
 } from "@tanstack/react-table";
-import { Eye, Pencil, Trash2 } from "lucide-react";
+import { Eye, Pencil, Trash2, EyeOff } from "lucide-react";
+import { useTransition } from "react";
 
 function ColumnHeader({ header }: HeaderContext<Product, unknown>) {
   return (
@@ -25,6 +30,7 @@ function RenderActions({ row }: CellContext<Product, unknown>) {
 
   const { isAdmin } = useAppSelector((state) => state.settings);
   const dispatch = useAppDispatch();
+  const [, startTransition] = useTransition();
 
   function onActionClick(event: React.MouseEvent<HTMLUListElement>) {
     const target = event.target as HTMLElement;
@@ -37,8 +43,16 @@ function RenderActions({ row }: CellContext<Product, unknown>) {
         case "edit":
           alert(`Edit: ${productName}`);
           break;
-        case "view":
-          alert(`View: ${productName}`);
+        case "enable":
+          startTransition(() => {
+            dispatch(enableProduct(product.slug));
+          });
+          break;
+
+        case "disable":
+          startTransition(() => {
+            dispatch(disableProduct(product.slug));
+          });
           break;
         case "delete":
           dispatch(removeProduct(product.slug));
@@ -49,6 +63,8 @@ function RenderActions({ row }: CellContext<Product, unknown>) {
     }
   }
 
+  const isDisabled = product.isDisabled || !isAdmin;
+
   return (
     <ul className="list-none flex gap-1" onClick={onActionClick}>
       <li>
@@ -56,8 +72,8 @@ function RenderActions({ row }: CellContext<Product, unknown>) {
           variant="outline"
           size="icon"
           data-action="edit"
-          disabled={!isAdmin}
-          aria-disabled={!isAdmin}
+          disabled={isDisabled}
+          aria-disabled={isDisabled}
         >
           <Pencil />
         </Button>
@@ -67,11 +83,11 @@ function RenderActions({ row }: CellContext<Product, unknown>) {
         <Button
           variant="outline"
           size="icon"
-          data-action="view"
+          data-action={product.isDisabled ? "enable" : "disable"}
           disabled={!isAdmin}
           aria-disabled={!isAdmin}
         >
-          <Eye />
+          {product.isDisabled ? <EyeOff /> : <Eye />}
         </Button>
       </li>
 
@@ -80,8 +96,8 @@ function RenderActions({ row }: CellContext<Product, unknown>) {
           variant="outline"
           size="icon"
           data-action="delete"
-          disabled={!isAdmin}
-          aria-disabled={!isAdmin}
+          disabled={isDisabled}
+          aria-disabled={isDisabled}
         >
           <Trash2 stroke="red" />
         </Button>
