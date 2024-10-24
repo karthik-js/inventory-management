@@ -25,7 +25,7 @@ export default function InventoryOverview() {
         Inventory Stats
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
-        <Card className="bg-gray-900">
+        <Card className="bg-[#252b3b]">
           <CardHeader>
             <CardTitle>Total Products</CardTitle>
           </CardHeader>
@@ -34,7 +34,7 @@ export default function InventoryOverview() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gray-900">
+        <Card className="bg-[#252b3b]">
           <CardHeader>
             <CardTitle>Total Store Value</CardTitle>
           </CardHeader>
@@ -43,7 +43,7 @@ export default function InventoryOverview() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gray-900">
+        <Card className="bg-[#252b3b]">
           <CardHeader>
             <CardTitle>Out of Stocks</CardTitle>
           </CardHeader>
@@ -52,7 +52,7 @@ export default function InventoryOverview() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gray-900">
+        <Card className="bg-[#252b3b]">
           <CardHeader>
             <CardTitle>No. of Category</CardTitle>
           </CardHeader>

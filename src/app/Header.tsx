@@ -18,7 +18,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-10 shadow">
+    <header className="sticky top-0 shadow z-50 bg-gray-900 border-b border-gray-800">
       <nav className="flex flex-row-reverse p-5">
         <div className="flex gap-2">
           <p className="text-sm text-gray-300">Admin</p>
